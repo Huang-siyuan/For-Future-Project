@@ -1,0 +1,69 @@
+-- SQL must be capitalized, table and field names must be lowercase.
+
+CREATE TABLE t_user (
+                          uid serial,
+                          username varchar(20) NOT NULL UNIQUE,
+                          password varchar(20) NOT NULL,
+                          salt varchar(36),
+                          phone varchar(20),
+                          email varchar(30),
+                          gender Integer,
+                          avatar varchar(50),
+                          created_user varchar(20),
+                          created_time timestamp,
+                          modified_user varchar(20),
+                          modified_time timestamp,
+                          PRIMARY KEY (uid)
+);
+COMMENT ON TABLE t_user IS 'user table';
+COMMENT ON COLUMN t_user.uid IS 'user id';
+COMMENT ON COLUMN t_user.username IS 'user name';
+COMMENT ON COLUMN t_user.password IS 'user password';
+COMMENT ON COLUMN t_user.salt IS 'Salt is a random string used to check the password';
+COMMENT ON COLUMN t_user.phone IS 'user''s phone';
+COMMENT ON COLUMN t_user.email IS 'user''s email';
+COMMENT ON COLUMN t_user.gender IS '0 is male, 1 is female';
+COMMENT ON COLUMN t_user.avatar IS 'user''s avatar';
+COMMENT ON COLUMN t_user.created_user IS 'log-creator';
+COMMENT ON COLUMN t_user.created_time IS 'log-creation time';
+COMMENT ON COLUMN t_user.modified_user IS 'log-modifier';
+COMMENT ON COLUMN t_user.modified_time IS 'log-modification time';
+
+
+CREATE TABLE t_address (
+                             aid serial,
+                             uid Integer not null ,
+                             address_name varchar(50),
+                             country varchar(20),
+                             city varchar(20),
+                             street varchar(40),
+                             flat varchar(20),
+                             zipcode varchar(6),
+                             phone varchar(20),
+                             address_tag varchar(6),
+                             is_default Integer,
+                             created_user varchar(20),
+                             created_time timestamp,
+                             modified_user varchar(20),
+                             modified_time timestamp,
+                             PRIMARY KEY (aid),
+                             CONSTRAINT "FK_t_address.uid"
+                                 FOREIGN KEY (uid)
+                                     REFERENCES t_user(uid)
+);
+COMMENT ON TABLE t_address IS 'address table';
+COMMENT ON COLUMN t_address.aid IS 'address id';
+COMMENT ON COLUMN t_address.uid IS 'user id';
+COMMENT ON COLUMN t_address.address_name IS 'receiver''s name';
+COMMENT ON COLUMN t_address.country IS 'country';
+COMMENT ON COLUMN t_address.city IS 'city';
+COMMENT ON COLUMN t_address.street IS 'street name with the number';
+COMMENT ON COLUMN t_address.flat IS 'flat number';
+COMMENT ON COLUMN t_address.zipcode IS 'zipcode usually';
+COMMENT ON COLUMN t_address.phone IS 'phone number';
+COMMENT ON COLUMN t_address.address_tag IS 'address tag';
+COMMENT ON COLUMN t_address.is_default IS '0 is not default, 1 is default';
+COMMENT ON COLUMN t_address.created_user IS 'log-creator';
+COMMENT ON COLUMN t_address.created_time IS 'log-creation time';
+COMMENT ON COLUMN t_address.modified_user IS 'log-modifier';
+COMMENT ON COLUMN t_address.modified_time IS 'log-modification time';
