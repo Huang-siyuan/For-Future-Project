@@ -1,4 +1,4 @@
-package com.doit.forfutherproject;
+package com.magic.spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
