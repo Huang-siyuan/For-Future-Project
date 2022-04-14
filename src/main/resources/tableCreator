@@ -13,6 +13,7 @@ CREATE TABLE t_user (
                           created_time timestamp,
                           modified_user varchar(20),
                           modified_time timestamp,
+                          is_deleted Integer DEFAULT 0,
                           PRIMARY KEY (uid)
 );
 COMMENT ON TABLE t_user IS 'user table';
@@ -28,6 +29,7 @@ COMMENT ON COLUMN t_user.created_user IS 'log-creator';
 COMMENT ON COLUMN t_user.created_time IS 'log-creation time';
 COMMENT ON COLUMN t_user.modified_user IS 'log-modifier';
 COMMENT ON COLUMN t_user.modified_time IS 'log-modification time';
+COMMENT ON COLUMN t_user.is_deleted IS '0 - not deleted, 1 - deleted';
 
 
 CREATE TABLE t_address (

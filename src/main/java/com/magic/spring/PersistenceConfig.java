@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 /**
  * @author Hsy
  * @Description We use this class to configure the database.
+ *              We use the @MapperScan annotation to configure the mapper package.
+ *              So we don't have to user @Mapper annotation in every mapper class.
  */
 @Configuration
 @MapperScan("com/magic/spring/DAO/mapper")
