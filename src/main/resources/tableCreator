@@ -3,7 +3,7 @@
 CREATE TABLE t_user (
                           uid serial,
                           username varchar(20) NOT NULL UNIQUE,
-                          password varchar(20) NOT NULL,
+                          password varchar(64) NOT NULL,
                           salt varchar(36),
                           phone varchar(20),
                           email varchar(30),

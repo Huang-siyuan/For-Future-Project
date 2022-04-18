@@ -1,4 +1,4 @@
-package com.magic.spring.DAO.POJO;
+package com.magic.spring.DAO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

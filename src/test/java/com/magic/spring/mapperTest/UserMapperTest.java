@@ -1,7 +1,7 @@
 package com.magic.spring.mapperTest;
 
-import com.magic.spring.DAO.POJO.User;
-import com.magic.spring.DAO.mapper.UserMapper;
+import com.magic.spring.DAO.User;
+import com.magic.spring.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 /**
  * @author Hsy
  * @Description @SpringBootTest will let this class won't be packaged into a jar file.
- *              @RunWith will let this class run with SpringRunner.
+ * @RunWith will let this class run with SpringRunner.
  *
  */
 @SpringBootTest

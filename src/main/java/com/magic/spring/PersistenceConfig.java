@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  *              So we don't have to user @Mapper annotation in every mapper class.
  */
 @Configuration
-@MapperScan("com/magic/spring/DAO/mapper")
+@MapperScan("com/magic/spring/mapper")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, MybatisAutoConfiguration.class})
 public class PersistenceConfig {
     /**
@@ -29,7 +29,7 @@ public class PersistenceConfig {
      * And we don't need to be worried about when we push the codes,
      * we will change other developers' username and password :-).
      * About how to set the environment variables in idea:
-     * https://blog.csdn.net/u010180815/article/details/105219332
+     * <a href="https://blog.csdn.net/u010180815/article/details/105219332">https://blog.csdn.net/u010180815/article/details/105219332</a>
      */
     @Value("${POSTGRES_URL}")
     private String postgresURL;
