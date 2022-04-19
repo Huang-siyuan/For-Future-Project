@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.pbkdf2.SHA256Digest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -23,13 +24,12 @@ import java.util.UUID;
 /**
  * @author Hsy
  */
-@Service
+@Service("userService")
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-    private final static int ENCRYPTION_TIME = 3;
-    private final static String ENCRYPTION_METHOD = "SHA-256";
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Constructor for UserServiceImpl
@@ -48,12 +48,12 @@ public class UserServiceImpl implements UserService {
             throw new UsernameDuplicatedException("The username is duplicated");
         }
 
-        // encode the password by SHA-256
+        // Encode the password by BCrypt algorithm.
+        // It's the default algorithm of Spring Security.
+        // It will generate a random salt in password automatically.
+        // So we don't need to save the salt in the database.
         String realPassword = user.getPassword();
-        String salt = UUID.randomUUID().toString().toUpperCase();
-        String encodedPassword = encodePassword(realPassword, salt);
-        user.setPassword(encodedPassword);
-        user.setSalt(salt);
+        user.setPassword(passwordEncoder.encode(realPassword));
 
         // Complete the log information.
         user.setCreatedUser(user.getUsername());
@@ -71,15 +71,15 @@ public class UserServiceImpl implements UserService {
         return rows;
     }
 
-    private String encodePassword(String password, String salt) throws NoSuchAlgorithmException {
-
-        for (int i = 0; i < ENCRYPTION_TIME; i++) {
-            MessageDigest messageDigest = MessageDigest.getInstance(ENCRYPTION_METHOD);
-            messageDigest.update((salt + password + salt).getBytes());
-            BigInteger sha = new BigInteger(messageDigest.digest());
-            password = sha.toString(32).toUpperCase();
-        }
-        return password;
-
-    }
+//    private String encodePassword(String password, String salt) throws NoSuchAlgorithmException {
+//
+//        for (int i = 0; i < ENCRYPTION_TIME; i++) {
+//            MessageDigest messageDigest = MessageDigest.getInstance(ENCRYPTION_METHOD);
+//            messageDigest.update((salt + password + salt).getBytes());
+//            BigInteger sha = new BigInteger(messageDigest.digest());
+//            password = sha.toString(32).toUpperCase();
+//        }
+//        return password;
+//
+//    }
 }

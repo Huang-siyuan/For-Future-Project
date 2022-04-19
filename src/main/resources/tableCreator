@@ -3,8 +3,7 @@
 CREATE TABLE t_user (
                           uid serial,
                           username varchar(20) NOT NULL UNIQUE,
-                          password varchar(64) NOT NULL,
-                          salt varchar(36),
+                          password varchar(128) NOT NULL,
                           phone varchar(20),
                           email varchar(30),
                           gender Integer,
@@ -14,13 +13,16 @@ CREATE TABLE t_user (
                           modified_user varchar(20),
                           modified_time timestamp,
                           is_deleted Integer DEFAULT 0,
+                          role Integer DEFAULT 0 NOT NULL,
+                          constraint check_role_value
+                              check ((role = 0) OR (role = 1)),
                           PRIMARY KEY (uid)
+
 );
 COMMENT ON TABLE t_user IS 'user table';
 COMMENT ON COLUMN t_user.uid IS 'user id';
 COMMENT ON COLUMN t_user.username IS 'user name';
 COMMENT ON COLUMN t_user.password IS 'user password';
-COMMENT ON COLUMN t_user.salt IS 'Salt is a random string used to check the password';
 COMMENT ON COLUMN t_user.phone IS 'user''s phone';
 COMMENT ON COLUMN t_user.email IS 'user''s email';
 COMMENT ON COLUMN t_user.gender IS '0 is male, 1 is female';
@@ -30,7 +32,7 @@ COMMENT ON COLUMN t_user.created_time IS 'log-creation time';
 COMMENT ON COLUMN t_user.modified_user IS 'log-modifier';
 COMMENT ON COLUMN t_user.modified_time IS 'log-modification time';
 COMMENT ON COLUMN t_user.is_deleted IS '0 - not deleted, 1 - deleted';
-
+COMMENT ON COLUMN t_user.role IS '0 - regular, 1 - admin';
 
 CREATE TABLE t_address (
                              aid serial,
