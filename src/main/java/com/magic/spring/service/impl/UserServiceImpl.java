@@ -67,19 +67,6 @@ public class UserServiceImpl implements UserService {
         if (rows != 1) {
             throw new InsertException("There is an exception when inserting the user");
         }
-
         return rows;
     }
-
-//    private String encodePassword(String password, String salt) throws NoSuchAlgorithmException {
-//
-//        for (int i = 0; i < ENCRYPTION_TIME; i++) {
-//            MessageDigest messageDigest = MessageDigest.getInstance(ENCRYPTION_METHOD);
-//            messageDigest.update((salt + password + salt).getBytes());
-//            BigInteger sha = new BigInteger(messageDigest.digest());
-//            password = sha.toString(32).toUpperCase();
-//        }
-//        return password;
-//
-//    }
 }

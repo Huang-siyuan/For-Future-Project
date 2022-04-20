@@ -40,11 +40,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        QueryWrapper<User> wrapper = new QueryWrapper();
         List<GrantedAuthority> auths;
         if (username != null) {
-            // Set the username which we want to query
-//            wrapper.eq("username", username);
-            // Query the user by mybatis-plus method
-            // Or you can use mybatis method.
-//            User user = userMapper.selectOne(wrapper);
             User user = userMapper.findUserByUsername(username);
             if (Objects.isNull(user)) {
                 throw new UsernameNotFoundException(String.format("User %s is not found", username));
@@ -59,7 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(user.getUsername(), new BCryptPasswordEncoder().encode(user.getPassword()), true, true, true, true, auths);
         }
         auths = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ANONYMOUS");
-        return new org.springframework.security.core.userdetails.User("anno", "anno", true, true, true, true, auths);
+        return new org.springframework.security.core.userdetails.User("anon", "anno", true, true, true, true, auths);
 
     }
 }
