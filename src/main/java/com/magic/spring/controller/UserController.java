@@ -1,5 +1,6 @@
 package com.magic.spring.controller;
 
+import com.magic.spring.AOP.MethodExporter;
 import com.magic.spring.DAO.User;
 import com.magic.spring.jwt.JwtTokenUtil;
 import com.magic.spring.service.UserService;
@@ -45,7 +46,9 @@ public class UserController {
         }
     }
 
+    @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping("/login")
+    @MethodExporter
     public ResponseEntity<?> login(@RequestBody User user) throws Exception {
         authenticate(user.getUsername(), user.getPassword());
 
@@ -78,5 +81,12 @@ public class UserController {
     @GetMapping("/index")
     public String index() {
         return "index";
+    }
+
+    @Secured({"ROLE_REGULAR"})
+    @GetMapping("/testAOP/{words}")
+    @MethodExporter
+    public String testAOP(@PathVariable String words) {
+        return "testAOP successfully" + words;
     }
 }
